@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nimantram — Coming Soon</title>
+  <meta name="description" content="India's most beautiful digital invitation platform. Create stunning invitations, share via WhatsApp, and track every RSVP — for every occasion that matters." />
+  <meta property="og:title" content="Nimantram — Coming Soon" />
+  <meta property="og:description" content="Create beautifully. Share instantly. India's all-in-one digital invitation platform." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0A0405;
+      --gold:       #C9A84C;
+      --gold-light: #EDD07E;
+      --saffron:    #E07A10;
+      --text:       #F5EDD8;
+      --muted:      #9A8070;
+      --border:     rgba(255,255,255,0.07);
+      --card-bg:    rgba(255,255,255,0.03);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 70px 20px 60px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grain texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Floating ambient orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.09), transparent 70%);
+      top: -150px; left: -150px;
+      animation: drift1 22s ease-in-out infinite;
+    }
+    .orb2 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(224,122,16,0.07), transparent 70%);
+      bottom: -100px; right: -100px;
+      animation: drift2 18s ease-in-out infinite;
+    }
+    .orb3 {
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(201,168,76,0.05), transparent 70%);
+      top: 45%; left: 55%;
+      animation: drift3 26s ease-in-out infinite;
+    }
+    @keyframes drift1 {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(40px, 30px); }
+    }
+    @keyframes drift2 {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(-30px, -40px); }
+    }
+    @keyframes drift3 {
+      0%, 100% { transform: translate(0, 0); }
+      33%       { transform: translate(20px, -30px); }
+      66%       { transform: translate(-25px, 20px); }
+    }
+
+    /* Corner motifs */
+    .corner {
+      position: fixed;
+      width: 140px; height: 140px;
+      opacity: 0.09;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .corner-tl { top: 0; left: 0; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); border-radius: 0 0 100% 0; }
+    .corner-tr { top: 0; right: 0; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); border-radius: 0 0 0 100%; }
+    .corner-bl { bottom: 0; left: 0; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); border-radius: 0 100% 0 0; }
+    .corner-br { bottom: 0; right: 0; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); border-radius: 100% 0 0 0; }
+
+    /* ─── Layout ─── */
+    .container {
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Hero ─── */
+    .hero { margin-bottom: 72px; }
+
+    .lamp-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 32px;
+    }
+    .lamp-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
+      animation: halo 3s ease-in-out infinite;
+    }
+    @keyframes halo {
+      0%, 100% { transform: scale(1);   opacity: 0.7; }
+      50%       { transform: scale(1.2); opacity: 1; }
+    }
+    .lamp { font-size: 2.4rem; display: block; position: relative; }
+
+    .brand-deva {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.88rem;
+      color: var(--gold);
+      letter-spacing: 0.4em;
+      margin-bottom: 12px;
+      opacity: 0.75;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 10vw, 6rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--saffron) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      color: rgba(154,128,112,0.5);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .divider-line {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 28px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(201,168,76,0.09);
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--gold);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 7px 20px;
+      border-radius: 100px;
+      margin-bottom: 36px;
+    }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: blink 1.6s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.12; }
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+    .headline em { font-style: italic; color: var(--gold-light); }
+
+    .tagline {
+      font-size: 0.93rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ─── Stats strip ─── */
+    .stats-strip {
+      display: flex;
+      align-items: center;
+      margin-top: 44px;
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat { flex: 1; text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 7px;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .stat-sep {
+      width: 1px; height: 36px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    /* ─── Language marquee ─── */
+    .marquee-wrap {
+      overflow: hidden;
+      width: 100vw;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 64px;
+    }
+    .marquee-wrap::before,
+    .marquee-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .marquee-wrap::before { left: 0;  background: linear-gradient(90deg, var(--bg), transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(90deg, transparent, var(--bg)); }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      width: max-content;
+      animation: marquee 32s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .lang {
+      font-size: 0.82rem;
+      color: rgba(154,128,112,0.55);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .marquee-track:hover .lang { color: rgba(201,168,76,0.6); }
+    .lang-dot {
+      color: rgba(201,168,76,0.2);
+      font-size: 0.6rem;
+    }
+
+    /* ─── Section label ─── */
+    .section-label {
+      font-size: 0.68rem;
+      color: rgba(154,128,112,0.5);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    /* ─── Ornamental divider ─── */
+    .orn-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 64px auto;
+      color: rgba(201,168,76,0.25);
+    }
+    .orn-divider span {
+      display: block;
+      width: 100px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25));
+    }
+    .orn-divider span:last-child {
+      background: linear-gradient(90deg, rgba(201,168,76,0.25), transparent);
+    }
+    .orn-divider svg { flex-shrink: 0; }
+
+    /* ─── How It Works ─── */
+    .steps-section { margin-bottom: 0; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 35px;
+      left: calc(16.66% + 14px);
+      right: calc(16.66% + 14px);
+      height: 1px;
+      background: linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.3), rgba(201,168,76,0.15));
+      pointer-events: none;
+    }
+
+    .step {
+      padding: 28px 18px 24px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+    .step:hover {
+      border-color: rgba(201,168,76,0.2);
+      background: rgba(201,168,76,0.04);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.25);
+    }
+    .step-num {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(201,168,76,0.18), rgba(224,122,16,0.12));
+      border: 1px solid rgba(201,168,76,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .step-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ─── Feature Cards ─── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      text-align: left;
+    }
+
+    .feat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 22px;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .feat-card:hover {
+      border-color: rgba(201,168,76,0.22);
+      background: rgba(201,168,76,0.03);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,168,76,0.08) inset;
+    }
+    .feat-card:hover::before { opacity: 1; }
+
+    .feat-icon {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .feat-title {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .feat-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── Occasions ─── */
+    .occasions-wrap {
+      padding: 30px 26px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+    .occasions-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 9px;
+    }
+    .occ {
+      font-size: 0.78rem;
+      color: rgba(154,128,112,0.6);
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(154,128,112,0.12);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .occ:hover {
+      border-color: rgba(201,168,76,0.2);
+      color: rgba(201,168,76,0.7);
+    }
+
+    /* ─── Footer ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+      font-size: 0.75rem;
+      color: rgba(154,128,112,0.3);
+      letter-spacing: 0.07em;
+    }
+
+    /* ─── Scroll animations ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    .feat-card.fade-up:nth-child(2) { transition-delay: 0.07s; }
+    .feat-card.fade-up:nth-child(3) { transition-delay: 0.14s; }
+    .feat-card.fade-up:nth-child(4) { transition-delay: 0.21s; }
+    .feat-card.fade-up:nth-child(5) { transition-delay: 0.28s; }
+    .feat-card.fade-up:nth-child(6) { transition-delay: 0.35s; }
+
+    .step.fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .step.fade-up:nth-child(3) { transition-delay: 0.2s; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 580px) {
+      .steps { grid-template-columns: 1fr; gap: 10px; }
+      .steps::before { display: none; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .corner { width: 80px; height: 80px; }
+      .orn-divider span { width: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <div class="container">
+
+    <!-- ── Hero ── -->
+    <div class="hero">
+      <div class="lamp-wrap">
+        <span class="lamp">🪔</span>
+      </div>
+
+      <div class="brand-deva">निमंत्रम्</div>
+      <div class="brand-name">Nimantram</div>
+      <div class="brand-sub">Create beautifully &nbsp;·&nbsp; Share instantly</div>
+
+      <div class="divider-line"></div>
+
+      <div class="badge"><span class="badge-dot"></span>Coming Soon</div>
+
+      <h1 class="headline">
+        Every occasion deserves<br>
+        an invitation <em>that feels truly yours.</em>
+      </h1>
+
+      <p class="tagline">
+        India's all-in-one digital invitation platform — create stunning invitations,
+        share via WhatsApp in seconds, and track every RSVP in real time.
+      </p>
+
+      <div class="stats-strip fade-up">
+        <div class="stat">
+          <div class="stat-num">100+</div>
+          <div class="stat-label">Templates</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">11</div>
+          <div class="stat-label">Indian Languages</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Occasions</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat">
+          <div class="stat-num">Zero</div>
+          <div class="stat-label">Guest logins needed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Language Marquee ── -->
+    <div class="marquee-wrap" aria-label="Supported languages">
+      <div class="marquee-track">
+        <span class="lang">Hindi</span><span class="lang-dot">◆</span>
+        <span class="lang">English</span><span class="lang-dot">◆</span>
+        <span class="lang">தமிழ்</span><span class="lang-dot">◆</span>
+        <span class="lang">తెలుగు</span><span class="lang-dot">◆</span>
+        <span class="lang">ಕನ್ನಡ</span><span class="lang-dot">◆</span>
+        <span class="lang">മലയാളം</span><span class="lang-dot">◆</span>
+        <span class="lang">বাংলা</span><span class="lang-dot">◆</span>
+        <span class="lang">ગુજરાતી</span><span class="lang-dot">◆</span>
+        <span class="lang">मराठी</span><span class="lang-dot">◆</span>
+        <span class="lang">ਪੰਜਾਬੀ</span><span class="lang-dot">◆</span>
+        <span class="lang">ଓଡ଼ିଆ</span><span class="lang-dot">◆</span>
+        <!-- duplicate for seamless loop -->
+        <span class="lang">Hindi</span><span class="lang-dot">◆</span>
+        <span class="lang">English</span><span class="lang-dot">◆</span>
+        <span class="lang">தமிழ்</span><span class="lang-dot">◆</span>
+        <span class="lang">తెలుగు</span><span class="lang-dot">◆</span>
+        <span class="lang">ಕನ್ನಡ</span><span class="lang-dot">◆</span>
+        <span class="lang">മലയാളം</span><span class="lang-dot">◆</span>
+        <span class="lang">বাংলা</span><span class="lang-dot">◆</span>
+        <span class="lang">ગુજરાતી</span><span class="lang-dot">◆</span>
+        <span class="lang">मराठी</span><span class="lang-dot">◆</span>
+        <span class="lang">ਪੰਜਾਬੀ</span><span class="lang-dot">◆</span>
+        <span class="lang">ଓଡ଼ିଆ</span><span class="lang-dot">◆</span>
+      </div>
+    </div>
+
+    <!-- ── How It Works ── -->
+    <div class="steps-section fade-up">
+      <div class="section-label">How it works</div>
+      <div class="steps">
+        <div class="step fade-up">
+          <div class="step-num">1</div>
+          <div class="step-title">Create</div>
+          <div class="step-desc">Pick from beautiful templates and personalize every detail for your occasion — in minutes, no design skills needed.</div>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">2</div>
+          <div class="step-title">Share</div>
+          <div class="step-desc">Send personalized invitations to your entire guest list via WhatsApp, SMS, or email with a single tap.</div>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">3</div>
+          <div class="step-title">Track</div>
+          <div class="step-desc">Watch RSVPs arrive in real time. Automated reminders follow up so you never have to chase anyone.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Ornamental Divider ── -->
+    <div class="orn-divider" aria-hidden="true">
+      <span></span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <polygon points="7,0 14,7 7,14 0,7" stroke="rgba(201,168,76,0.4)" stroke-width="1" fill="none"/>
+        <polygon points="7,3 11,7 7,11 3,7" stroke="rgba(201,168,76,0.25)" stroke-width="0.5" fill="none"/>
+      </svg>
+      <span></span>
+    </div>
+
+    <!-- ── Feature Cards ── -->
+    <div class="fade-up">
+      <div class="section-label">What you get</div>
+      <div class="feature-grid">
+        <div class="feat-card fade-up">
+          <span class="feat-icon">🎨</span>
+          <div class="feat-title">Beautiful Design Editor</div>
+          <div class="feat-desc">Dozens of templates for every occasion. Customize colors, fonts, and layouts — no design experience required.</div>
+        </div>
+        <div class="feat-card fade-up">
+          <span class="feat-icon">💬</span>
+          <div class="feat-title">WhatsApp-First Delivery</div>
+          <div class="feat-desc">Guests receive a personalized invitation directly in WhatsApp. No app download or login required on their end.</div>
+        </div>
+        <div class="feat-card fade-up">
+          <span class="feat-icon">✅</span>
+          <div class="feat-title">Real-time RSVP Dashboard</div>
+          <div class="feat-desc">See who's attending, who declined, and who hasn't responded — all in a live, easy-to-read dashboard.</div>
+        </div>
+        <div class="feat-card fade-up">
+          <span class="feat-icon">🔔</span>
+          <div class="feat-title">Automated Reminders</div>
+          <div class="feat-desc">Set follow-up reminders for non-responders. Stop chasing guests manually and focus on your event.</div>
+        </div>
+        <div class="feat-card fade-up">
+          <span class="feat-icon">🔒</span>
+          <div class="feat-title">Guest Privacy Pledge</div>
+          <div class="feat-desc">Guests never create an account. Their contact data is never used for marketing — ever. Your guests, your trust.</div>
+        </div>
+        <div class="feat-card fade-up">
+          <span class="feat-icon">📱</span>
+          <div class="feat-title">Works on Any Device</div>
+          <div class="feat-desc">Guests open and RSVP from any phone or browser. No compatibility issues, no friction for anyone on your list.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Ornamental Divider ── -->
+    <div class="orn-divider" aria-hidden="true">
+      <span></span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <polygon points="7,0 14,7 7,14 0,7" stroke="rgba(201,168,76,0.4)" stroke-width="1" fill="none"/>
+        <polygon points="7,3 11,7 7,11 3,7" stroke="rgba(201,168,76,0.25)" stroke-width="0.5" fill="none"/>
+      </svg>
+      <span></span>
+    </div>
+
+    <!-- ── Occasions ── -->
+    <div class="occasions-wrap fade-up">
+      <div class="section-label" style="margin-bottom:18px;">For every occasion</div>
+      <div class="occasions-list">
+        <span class="occ">Weddings</span>
+        <span class="occ">Birthdays</span>
+        <span class="occ">Festivals</span>
+        <span class="occ">Baby Showers</span>
+        <span class="occ">Puja & Ceremonies</span>
+        <span class="occ">Anniversaries</span>
+        <span class="occ">Corporate Events</span>
+        <span class="occ">Condolences</span>
+        <span class="occ">Engagements</span>
+        <span class="occ">Graduations</span>
+      </div>
+    </div>
+
+    <!-- ── Footer ── -->
+    <div class="orn-divider" aria-hidden="true" style="margin-bottom:28px;">
+      <span></span>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <polygon points="7,0 14,7 7,14 0,7" stroke="rgba(201,168,76,0.4)" stroke-width="1" fill="none"/>
+        <polygon points="7,3 11,7 7,11 3,7" stroke="rgba(201,168,76,0.25)" stroke-width="0.5" fill="none"/>
+      </svg>
+      <span></span>
+    </div>
+
+    <footer>
+      nimantram.com &nbsp;·&nbsp; Launching 2026 &nbsp;·&nbsp; Made for India 🇮🇳
+    </footer>
+
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
